@@ -16,13 +16,13 @@ const ToDo = () => {
                     {
                         tasks.map(task => <div class="card bg-primary text-primary-content">
                             <div className='flex justify-around items-center'>
-                                <div class="form-control">
-                                    <label class="cursor-pointer label">
-                                        <input type="checkbox" checked="checked" class="checkbox checkbox-secondary" />
-                                    </label>
+                                <div className='py-2'>
+                                    <h2 className='text-xl font-bold text-secondary'>{task?.name}</h2>
+                                    <p>{task?.details}</p>
+                                    <p>{task?.date}</p>
+                                    <span className='text-xs text-slate-300'>Task created Time: {task?.time}</span>
+
                                 </div>
-                                <h2>{task?.name}</h2>
-                                <button className='btn btn-xs btn-secondary'>Edit</button>
                             </div>
                         </div>)
                     }

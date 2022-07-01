@@ -15,14 +15,15 @@ const Home = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        const current = new Date();
         
         const name = event.target.name.value;
-
-        if (name === '') {
-            alert('please enter a input');
-            return;
-        }
-        const newTask = { name }
+        const details = event.target.details.value;
+        const date = event.target.date.value ? event.target.date.value : current.getFullYear() + '-' + current.getMonth() + '-' + current.getDate();
+        const time = current.getHours() + ':' + current.getMinutes() + ':' + current.getSeconds();
+        // console.log(time);
+        event.target.reset();
+        const newTask = { name, details, date, time}
         
         console.log(newTask);
         fetch(`http://localhost:5000/task`, {
@@ -66,7 +67,14 @@ const Home = () => {
                                     <input
                                         type="text"
                                         name='name'
-                                        placeholder="Task name" class="input input-bordered w-full max-w-xs" /><br />
+                                        placeholder="Task name" class="input input-bordered w-full max-w-xs" required/><br />
+                                    <input
+                                        type="text"
+                                        name='details'
+                                        placeholder="Task details" class="mt-4 input input-bordered w-full max-w-xs" /><br />
+                                    <input
+                                        type="date"
+                                        name='date'class="mt-4 input input-bordered w-full max-w-xs" /><br />
                     
                                     <input type="submit" className='btn w-48 mt-4 btn-primary'/>
                                 </form>
@@ -90,7 +98,12 @@ const Home = () => {
                                         <input type="checkbox" checked="checked" class="checkbox checkbox-secondary" />
                                     </label>
                                 </div>
-                                <h2>{task?.name}</h2>
+                                <div className='py-2'>
+                                    <h2 className='text-xl text-secondary font-bold'>{task?.name}</h2>
+                                    <small>{task?.details && task?.details}</small>
+                                    <p>{task?.date && task?.date}</p>
+                                    <small>Task Added Time: {task?.time && task?.time }</small>
+                                </div>
                                 <label
                                     onClick={() => setUpdatedTask(task)} 
                                     for="my-modal-1"
