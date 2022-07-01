@@ -1,23 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Task from './Task';
 
 const ToDo = () => {
-    const tasks = [
-        {id:1, name:"task-1"},
-        {id:2, name:"task-2"},
-        {id:3, name:"task-3"}
-    ]
+    const [tasks, setTasks] = useState([]);
+    useEffect(() => {
+        fetch(`http://localhost:5000/tasks`)
+            .then(res => res.json())
+            .then(data => setTasks(data))
+    }, [])
+    
     return (
-        <div className='m-24'>
-            <h1>this is to do</h1>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {
-                    tasks.map(task => <div class="card bg-primary text-primary-content">
-                        <div class="card-body">
-                            <h2 class="card-title">{task.name}</h2>
-                        </div>
-                    </div>)
-                }
+        <div className='mx-32 my-12'>
+            <h1 className='mb-8 text-4xl'>Todo Lists</h1>
+            <div class="grid grid-cols-1 gap-4 mx-auto">
+                    {
+                        tasks.map(task => <div class="card bg-primary text-primary-content">
+                            <div className='flex justify-around items-center'>
+                                <div class="form-control">
+                                    <label class="cursor-pointer label">
+                                        <input type="checkbox" checked="checked" class="checkbox checkbox-secondary" />
+                                    </label>
+                                </div>
+                                <h2>{task?.name}</h2>
+                                <button className='btn btn-xs btn-secondary'>Edit</button>
+                            </div>
+                        </div>)
+                    }
             </div>
         </div>
     );
