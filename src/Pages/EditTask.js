@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EditTask = ({ updatedTask, setUpdatedTask }) => {
+const EditTask = ({ updatedTask, setUpdatedTask, setRender, render }) => {
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -8,18 +8,21 @@ const EditTask = ({ updatedTask, setUpdatedTask }) => {
         const details = event.target.updatedDetails.value;
         const date = event.target.updatedDate.value;
         
-        const UpdatedInfo = { name, details, date };
-        const url = `http://localhost:5000/task/${updatedTask?._id}`;
+        const updatedInfo = { name, details, date };
+        console.log(updatedInfo);
+
+        const url = `https://serene-thicket-38769.herokuapp.com/task/${updatedTask?._id}`;
         fetch(url, {
             method: 'PUT',
             headers: {
                 'content-type':'application/json'
             },
-            body: JSON.stringify(UpdatedInfo)
+            body: JSON.stringify(updatedInfo)
         })
             .then(res => res.json())
             .then(data => {
-            console.log(data);
+                setRender(!render)
+                console.log(data);
         })
 
         setUpdatedTask(null);

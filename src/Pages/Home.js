@@ -8,10 +8,10 @@ const Home = () => {
     const [updatedTask, setUpdatedTask] = useState({});
 
     useEffect(() => {
-        fetch(`http://localhost:5000/tasks`)
+        fetch(`https://serene-thicket-38769.herokuapp.com/tasks`)
             .then(res => res.json())
             .then(data => setTasks(data))
-    }, [updatedTask, render])
+    }, [render])
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -26,7 +26,7 @@ const Home = () => {
         const newTask = { name, details, date, time}
         
         console.log(newTask);
-        fetch(`http://localhost:5000/task`, {
+        fetch(`https://serene-thicket-38769.herokuapp.com/task`, {
             method: 'POST',
             headers: {
                 'content-type':'application/json'
@@ -41,7 +41,7 @@ const Home = () => {
 
     const deleteTask = (id) => {
         console.log(id);
-        fetch(`http://localhost:5000/task/${id}`, {
+        fetch(`https://serene-thicket-38769.herokuapp.com/task/${id}`, {
             method: 'DELETE'
         })
             .then(res => res.json())
@@ -57,7 +57,7 @@ const Home = () => {
             <div class="hero min-h-screen bg-base-200">
                 <div class="hero-content flex-col lg:flex-row-reverse">
                     <div class="text-center lg:text-left">
-                        <h1 class="text-5xl font-bold mb-8">Add Task now!</h1>
+                        <h1 class="text-5xl font-bold mb-8">Create your Own Task now!</h1>
                 
                     </div>
                     <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
@@ -85,38 +85,42 @@ const Home = () => {
             </div>
 
             {/* ToDo List */}
-            <div className='mx-32 my-12'>
-                <h1 className='mb-8 text-4xl'>Todo Lists</h1>
-                <div class="grid grid-cols-1 gap-4 mx-auto">
+            <div className='mx-10 md:mx-32 my-12'>
+                <h1 className='mb-12 text-5xl font-bold '>Todo Lists</h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {
                         tasks.map(task => <div class="card bg-primary text-primary-content">
-                            <div className='flex justify-around items-center'>
+                            <div className='flex justify-between items-center p-4'>
                                 <div
                                     onClick={()=>deleteTask(task._id)}
                                     class="form-control">
                                     <label class="cursor-pointer label">
-                                        <input type="checkbox" checked="checked" class="checkbox checkbox-secondary" />
+                                        <input type="checkbox" checked="checked" class="checkbox checkbox-secondary
+    
+                                        " />
                                     </label>
                                 </div>
-                                <div className='py-2'>
-                                    <h2 className='text-xl text-secondary font-bold'>{task?.name}</h2>
-                                    <small>{task?.details && task?.details}</small>
-                                    <p>{task?.date && task?.date}</p>
-                                    <small>Task Added Time: {task?.time && task?.time }</small>
+                                <div className='w-3/5'>
+                                    <h2 className='text-2xl text-secondary font-bold mb-2'>{task?.name}</h2>
+                                    <small className='text-sm text-slate-100'>{task?.details && task?.details}</small>
+                                    <p className='my-2 text-slate-200'>{task?.date && task?.date}</p>
+                                    <small className='text-slate-300'>Task Create Time: {task?.time && task?.time }</small>
                                 </div>
                                 <label
                                     onClick={() => setUpdatedTask(task)} 
                                     for="my-modal-1"
-                                    class="btn btn-xs btn-secondary">Edit Task</label>
+                                    class="btn h-full btn-secondary">Edit Task</label>
                             </div>
                         </div>)
                     }
                 </div>
                 {updatedTask && <EditTask
                     setUpdatedTask={setUpdatedTask}
-                    updatedTask={updatedTask}></EditTask>}
+                    updatedTask={updatedTask}
+                    render={render}
+                    setRender={setRender}
+                ></EditTask>}
             </div>
-
         </div>
     );
 };
