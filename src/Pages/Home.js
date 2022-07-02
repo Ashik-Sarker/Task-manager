@@ -57,7 +57,7 @@ const Home = () => {
             <div class="hero min-h-screen bg-base-200">
                 <div class="hero-content flex-col lg:flex-row-reverse">
                     <div class="text-center lg:text-left">
-                        <h1 class="text-5xl font-bold mb-8">Create your Own Task now!</h1>
+                        <h1 class="text-5xl font-bold mb-8">Create your Own Task now...</h1>
                 
                     </div>
                     <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
@@ -93,7 +93,7 @@ const Home = () => {
                             <div className='flex justify-between items-center p-4'>
                                 <div
                                     onClick={()=>deleteTask(task._id)}
-                                    class="form-control">
+                                    class="form-control mr-8">
                                     <label class="cursor-pointer label">
                                         <input type="checkbox" checked="checked" class="checkbox checkbox-secondary
     
@@ -109,7 +109,7 @@ const Home = () => {
                                 <label
                                     onClick={() => setUpdatedTask(task)} 
                                     for="my-modal-1"
-                                    class="btn h-full btn-secondary">Edit Task</label>
+                                    class="btn h-full btn-outline btn-secondary">Edit Task</label>
                             </div>
                         </div>)
                     }
